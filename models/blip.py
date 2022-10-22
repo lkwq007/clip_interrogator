@@ -138,7 +138,7 @@ class BLIP_Decoder(nn.Module):
         input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids.to(image.device) 
         input_ids[:,0] = self.tokenizer.bos_token_id
         input_ids = input_ids[:, :-1] 
-
+        self.text_decoder._validate_model_kwargs=lambda x:x
         if sample:
             #nucleus sampling
             outputs = self.text_decoder.generate(input_ids=input_ids,
